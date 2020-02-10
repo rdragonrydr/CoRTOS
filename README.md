@@ -1,5 +1,9 @@
 # CoRTOS
 A simple task scheduling library for the Arduino ecosystem.
+Caveats: 
+1. It's not preemptive, so if a task takes too long, other tasks will wait. Any tasks that should have run during the
+waiting period will then run all at once in priority ordering. This *includes* important tasks that happen to be stuck behind a rare, slow task.
+2. If there are a lot of tasks, or one of them doesn't have a `sleep` in it, some lower-priority tasks will never run. This is called starvation.
 
 ### Installation:
 Assuming that you have downloaded this as a zip file, unzip the file and open the resulting folder.
