@@ -50,3 +50,8 @@ Example: `cortos.sleep(1000);` (without the task name) will set the current task
 iterations. It will also put the task to sleep, so note that the task won't run for one second after this function call.
 This is only really relevant in initialization code, where you want the task to run instantly the first time
 when the Arduino starts up.
+
+### Wishlist:
+ - [ ] Design a custom allocator to handle the TCB. This should improve speed and code efficiency.
+ - [ ] Add a method to allow lambda functions to be used. As it stands now, tasks are referenced by the function pointer, which can't be readily accessed for lambda functions. I'm thinking of using an index into that task's TCB index combined with some kind of UID. This will be stored into a single integer (16-bit?) for ease of access and storage.
+ - [ ] Add multithreading support. Not something that will be seen soon... You can always just make another instance of the scheduler so long as they don't share tasks, though.
