@@ -28,8 +28,8 @@ scheduler	KEYWORD2
 task	KEYWORD3
 
 
-# Instances (KEYWORD2)
-cortos	KEYWORD2
+# Instances (KEYWORD1)
+cortos	KEYWORD1
 
 
 # Constants (LITERAL1)
