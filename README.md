@@ -11,9 +11,9 @@ Copy the folder to your [Arduino library directory](https://www.arduino.cc/en/ha
 
 ### Usage of this library:
 Setup:
-Add `#include <CoRTOS.h>` to the top of your sketch.
-Put `cortos.init();` within the setup() function of your sketch.
-Put `cortos.scheduler();` within the loop() function of your sketch.
+1. Add `#include <CoRTOS.h>` to the top of your sketch.
+2. Put `cortos.init();` within the setup() function of your sketch.
+3. Put `cortos.scheduler();` within the loop() function of your sketch.
 
 ### Creating a task:
 For your project to run correctly, you need to ensure at least one of the following:
