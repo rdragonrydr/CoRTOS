@@ -1,0 +1,39 @@
+# Syntax Coloring Map for the CoRTOS Library
+
+
+# Datatypes (KEYWORD1)
+cortos_class	KEYWORD1
+
+
+# Methods and Functions (KEYWORD2)
+registerTask	KEYWORD2
+setTaskName	KEYWORD2
+setTaskFlags	KEYWORD2
+clearTaskFlags	KEYWORD2
+setPriority	KEYWORD2
+sleep	KEYWORD2
+setSleepTime	KEYWORD2
+unlockTask	KEYWORD2
+lockTask	KEYWORD2
+killTask	KEYWORD2
+getNumTasks	KEYWORD2
+getRTOSMaxTasks	KEYWORD2
+getLoad	KEYWORD2
+enableDebug	KEYWORD2
+init	KEYWORD2
+scheduler	KEYWORD2
+
+
+# Structures (KEYWORD3)
+task	KEYWORD3
+
+
+# Instances (KEYWORD2)
+cortos	KEYWORD2
+
+
+# Constants (LITERAL1)
+DELAFTER	LITERAL1
+PERIODIC	LITERAL1
+SLEEPFOR	LITERAL1
+DEADLINE	LITERAL1
