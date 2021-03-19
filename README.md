@@ -1,7 +1,7 @@
 # CoRTOS
 A simple task scheduling library for the Arduino ecosystem.
 Caveats: 
-1. It's not preemptive, so if a task takes too long, other tasks will wait. Any tasks that should have run during the waiting period will then run all at once in priority ordering. This *includes* important tasks that happen to be stuck behind a rare, slow task.
+1. It's not preemptive, so if a task takes too long, other tasks will wait. Any tasks that should have run during the waiting period will then run all at once in priority ordering. This **includes** important tasks that happen to be stuck behind a rare, slow task.
 2. If there are a lot of tasks, or one of them doesn't have a `sleep` in it, some lower-priority tasks will never run. This is called starvation.
 
 ### Installation:
@@ -41,25 +41,26 @@ Notes:
 * Do not include parentheses after the function name when registering it. 
 * `<priority>` is a value between 0 and 255; tasks with lower numbers run first if given the option. The number is not unique.
 * If you want something more **reliable**, use the `PERIODIC` (etc) flags rather than calling `sleep()`.
- * `PERIODIC` is like sleep, except that it's automatic and you don't need to change your code.
- * `PERIODIC | SLEEPFOR` is best for timekeeping, since it will always run on the dot and it'll catch up if it falls behind.
- * `PERIODIC | SLEEPFOR | DEADLINE` is best for code that should always run on a fixed schedule, but can't run more than once in that time. (SLEEPFOR alone will cause the task to run two or more times in quick succession if it misses its deadline. This is problematic for things like sensors.)
- * There's a function set for enabling (setting) or disabling (clearing) flags after setup, if you want to change their state later.
- * `DELAFTER` is the opposite of `PERIODIC`. Use of this flag will remove the task after running, and to use it again will require re-registering it.
- * There exist other flags, but they are for internal use only and using them in your code may break something.
+  * `PERIODIC` is like sleep, except that it's automatic and you don't need to change your code.
+  * `PERIODIC | SLEEPFOR` is best for timekeeping, since it will always run on the dot and it'll catch up if it falls behind.
+  * `PERIODIC | SLEEPFOR | DEADLINE` is best for code that should always run on a fixed schedule, but can't run more than once in that time. (SLEEPFOR alone will cause the task to run two or more times in quick succession if it misses its deadline. This is problematic for things like sensors.)
+  * There's a function set for enabling (setting) or disabling (clearing) flags after setup, if you want to change their state later.
+  * `DELAFTER` is the opposite of `PERIODIC`. Use of this flag will remove the task after running, and to use it again will require re-registering it.
+  * There exist other flags, but they are for internal use only and using them in your code may break something.
 
 ### Modifying tasks:
 Tasks can be deleted, have their priorities updated, paused, or set to sleep for different times.
-Refer to the listing under "task interface functions" in Cortos.h for more information.
+Refer to the listing under "task interface functions" in CoRTOS.h for more information.
 Using these functions is exactly as shown in the `setSleepTime` in the "Creating a task" entry: list the task's function name, and then the
 updated parameter (if it takes one).
 
-As a further helpful option, editing the currently-running task (usually from code inside the task itself) can be easily done by leaving out the task name as the first parameter. Similarly, during setup, this will refer to the last task you called registerTask() on.
+As a further helpful option, editing the currently-running task (usually from code inside the task itself) can be easily done by leaving out the task name as the first parameter. Similarly, during setup, such a method will refer to the last task you called registerTask() on.
 
 Example: `cortos.sleep(1000);` (without the task name) will set the current task's sleep time to be one second in-between
-iterations. It will also put the task to sleep, so note that the task won't run for one second after this function call.
+iterations. 
+(As with all sleep calls, it will also put the task to sleep, so note that the task won't run for one second after this function call.
 This last is only really relevant in initialization code, where you (may or may not) want the task to run instantly the first time
-when the Arduino starts up.
+when the Arduino starts up.)
 
 ### Wishlist:
  - [ ] Add a method to allow lambda functions to be used. As it stands now, tasks are referenced by the function pointer, which can't be readily accessed for lambda functions. I'm thinking of using an index into that task's TCB index combined with some kind of UID. This will be stored into a single integer (16-bit?) for ease of access and storage.
