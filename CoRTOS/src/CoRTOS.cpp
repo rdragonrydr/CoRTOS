@@ -285,8 +285,8 @@ void cortos_class::scheduler() {
     }
 #endif
     accumulated_run_time += end_time - start_time;
-    if (end_time - last_checked_time > 500) {
-      last_checked_time = end_time;
+    if (((uint16_t)end_time) - last_checked_time > 500) {
+      last_checked_time = (uint16_t)end_time;
       CPU_use = (byte)(accumulated_run_time / 5.0);
       accumulated_run_time = 0;
     }
