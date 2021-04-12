@@ -209,8 +209,9 @@ void cortos_class::scheduler() {
     uint16_t pri = 256; // Since equal priorities are ignored, use one larger to initialize.
     byte index = 0;     // current logical task we are checking
     byte candidate = 0; // task index that has current best priority
+    byte startaddr = cur_task_ptr + 1;
     while (index < TBL_SIZE) {
-      byte adjusted = (index + cur_task_ptr + 1) % TBL_SIZE; // physical index starting on the last task run.
+      byte adjusted = (index + startaddr) % TBL_SIZE; // physical index starting on the last task run.
       if (processes[adjusted].exec != NULL) {
         if (processes[adjusted].flags & SLEEPING) {
           if ((start_time - processes[adjusted].last_ran) >= processes[adjusted].delay) {
@@ -242,7 +243,6 @@ void cortos_class::scheduler() {
       Serial.println(str);
     }
 #endif
-    //(start_time - processes[adjusted].last_ran) >= processes[adjusted].delay)
     processes[cur_task_ptr].exec();
     if (processes[cur_task_ptr].flags & DELAFTER) {
       processes[cur_task_ptr].exec = NULL;
@@ -287,7 +287,7 @@ void cortos_class::scheduler() {
     accumulated_run_time += end_time - start_time;
     if (((uint16_t)end_time) - last_checked_time > 500) {
       last_checked_time = (uint16_t)end_time;
-      CPU_use = (byte)(accumulated_run_time / 5.0);
+      CPU_use = (byte)(accumulated_run_time * 0.2);
       accumulated_run_time = 0;
     }
   }
